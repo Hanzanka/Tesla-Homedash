@@ -16,17 +16,20 @@ class DataPlot(QFrame):
     Args:
         
     '''
-    def __init__(self) -> None:
+    def __init__(self, title: str, x_range: tuple, y_range: tuple) -> None:
         super().__init__()
 
         self.__layout = QVBoxLayout()
         self.__layout.setContentsMargins(5, 5, 5, 5)
+        self.setLayout(self.__layout)
 
         self.__graph = pg.GraphicsLayoutWidget()
         self.__graph.viewport().setMouseTracking(True)
+        self.__layout.addWidget(self.__graph)
 
         self.__plot = self.__graph.addPlot()
-        self.__plot.setRange(xRange=(-5, 5), yRange=(2, -2))
+        self.__plot.setTitle(title)
+        self.__plot.setRange(xRange=x_range, yRange=y_range)
         self.__plot.setMenuEnabled(False)
         self.__plot.setMouseEnabled(x=False, y=False)
         self.__plot.hideButtons()
@@ -58,24 +61,22 @@ class DataPlot(QFrame):
         self.__y_value.setZValue(2)
         self.__plot.addItem(self.__y_value)
 
-        grad = QLinearGradient(0, 0, 0, 6)
-        grad.setColorAt(0.0, pg.mkColor("#000000"))
-        grad.setColorAt(0.5, pg.mkColor("orange"))
+        grad = QLinearGradient(0, 0, 0, 3 * y_range[1])
+        grad.setColorAt(0.0, pg.mkColor("black"))
+        grad.setColorAt(0.5, pg.mkColor("red"))
         brush = QBrush(grad)
 
         # Testing:
         self.__x_data = np.linspace(start=-5, stop=5, num=1000)
-        self.__y_data = np.cos(5 * self.__x_data)
+        self.__y_data = 25 * np.cos(5 * self.__x_data)
+        self.__y_data[400:600] = self.__y_data[400:600] * 2
         self.__plot.plot(
             self.__x_data,
             self.__y_data,
-            pen=pg.mkPen("orange"),
+            pen=pg.mkPen(color="orange", width=1),
             brush=brush,
             fillLevel=0,
         )
-
-        self.__layout.addWidget(self.__graph)
-        self.setLayout(self.__layout)
 
     @Slot(tuple)
     def __on_mouse_moved(self, pos):
@@ -96,6 +97,6 @@ if __name__ == "__main__":
     from PySide6.QtWidgets import QApplication
 
     app = QApplication()
-    dataplot = DataPlot()
+    dataplot = DataPlot(title="Test", x_range=(-5, 5), y_range=(-100, 100))
     dataplot.show()
     app.exec()
