@@ -27,6 +27,9 @@ class DataPlot(QFrame):
         self.__graph.viewport().setMouseTracking(True)
         self.__layout.addWidget(self.__graph)
 
+        self.__x_range = x_range
+        self.__y_range = y_range
+
         self.__plot = self.__graph.addPlot()
         self.__plot.setTitle(title)
         self.__plot.setRange(xRange=x_range, yRange=y_range)
@@ -35,16 +38,22 @@ class DataPlot(QFrame):
         self.__plot.hideButtons()
         self.__plot.scene().sigMouseMoved.connect(self.__on_mouse_moved)
 
-        self.__crosshair = pg.InfiniteLine(pos=(0, 0), angle=90, pen=pg.mkPen("red"))
-        self.__crosshair.setZValue(1)
+        self.__crosshair_x = pg.InfiniteLine(pos=(0, 0), angle=90, pen=pg.mkPen("red"))
+        self.__crosshair_x.setZValue(1)
         self.__plot.addItem(
-            self.__crosshair,
+            self.__crosshair_x,
+        )
+        
+        self.__crosshair_y = pg.InfiniteLine(pos=(0, 0), angle=0, pen=pg.mkPen("red"))
+        self.__crosshair_y.setZValue(1)
+        self.__plot.addItem(
+            self.__crosshair_y
         )
 
         self.__x_value = pg.TextItem(
             text="",
             color="black",
-            anchor=(0.5, 0.5),
+            anchor=(-0.05, 0.5),
             border=pg.mkPen("white"),
             fill=pg.mkBrush("white"),
         )
@@ -54,27 +63,28 @@ class DataPlot(QFrame):
         self.__y_value = pg.TextItem(
             text="",
             color="black",
-            anchor=(0.5, 0.5),
+            anchor=(-0.05, 1.25),
             border=pg.mkPen("white"),
             fill=pg.mkBrush("white"),
         )
         self.__y_value.setZValue(2)
         self.__plot.addItem(self.__y_value)
-
-        grad = QLinearGradient(0, 0, 0, 3 * y_range[1])
-        grad.setColorAt(0.0, pg.mkColor("black"))
-        grad.setColorAt(0.5, pg.mkColor("red"))
-        brush = QBrush(grad)
+        
+        self.__gradient = QLinearGradient(0, 1 * y_range[0], 0, 1 * y_range[1])
+        self.__gradient.setColorAt(1, pg.mkColor("red"))
+        self.__gradient.setColorAt(0.5, pg.mkColor((255, 255, 0, 15)))
+        self.__gradient.setColorAt(0.0, pg.mkColor("green"))
+        self.__brush = QBrush(self.__gradient)
 
         # Testing:
         self.__x_data = np.linspace(start=-5, stop=5, num=1000)
-        self.__y_data = 25 * np.cos(5 * self.__x_data)
+        self.__y_data = 50 * np.cos(5 * self.__x_data)
         self.__y_data[400:600] = self.__y_data[400:600] * 2
         self.__plot.plot(
             self.__x_data,
             self.__y_data,
             pen=pg.mkPen(color="orange", width=1),
-            brush=brush,
+            brush=self.__brush,
             fillLevel=0,
         )
 
@@ -88,8 +98,9 @@ class DataPlot(QFrame):
 
         self.__x_value.setText(str(x_value))
         self.__y_value.setText(str(y_value))
-        self.__crosshair.setPos(x_value)
-        self.__x_value.setPos(x_value, -2)
+        self.__crosshair_x.setPos(x_value)
+        self.__crosshair_y.setPos(y_value)
+        self.__x_value.setPos(x_value, self.__y_range[0])
         self.__y_value.setPos(x_value, y_value)
 
 
