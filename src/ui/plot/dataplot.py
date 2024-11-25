@@ -38,13 +38,13 @@ class DataPlot(QFrame):
         self.__plot.hideButtons()
         self.__plot.scene().sigMouseMoved.connect(self.__on_mouse_moved)
 
-        self.__crosshair_x = pg.InfiniteLine(pos=(0, 0), angle=90, pen=pg.mkPen("red"))
+        self.__crosshair_x = pg.InfiniteLine(pos=(0, 0), angle=90, pen=pg.mkPen("orange"))
         self.__crosshair_x.setZValue(1)
         self.__plot.addItem(
             self.__crosshair_x,
         )
         
-        self.__crosshair_y = pg.InfiniteLine(pos=(0, 0), angle=0, pen=pg.mkPen("red"))
+        self.__crosshair_y = pg.InfiniteLine(pos=(0, 0), angle=0, pen=pg.mkPen("orange"))
         self.__crosshair_y.setZValue(1)
         self.__plot.addItem(
             self.__crosshair_y
@@ -52,20 +52,20 @@ class DataPlot(QFrame):
 
         self.__x_value = pg.TextItem(
             text="",
-            color="black",
-            anchor=(-0.05, 0.5),
-            border=pg.mkPen("white"),
-            fill=pg.mkBrush("white"),
+            color="white",
+            anchor=(0.5, 0.5),
+            border=pg.mkPen("orange"),
+            fill=pg.mkBrush("black"),
         )
         self.__x_value.setZValue(2)
         self.__plot.addItem(self.__x_value)
 
         self.__y_value = pg.TextItem(
             text="",
-            color="black",
-            anchor=(-0.05, 1.25),
-            border=pg.mkPen("white"),
-            fill=pg.mkBrush("white"),
+            color="white",
+            anchor=(-0.10, 0.5),
+            border=pg.mkPen("orange"),
+            fill=pg.mkBrush("black"),
         )
         self.__y_value.setZValue(2)
         self.__plot.addItem(self.__y_value)
