@@ -10,12 +10,13 @@ import numpy as np
 
 
 class DataPlot(QFrame):
-    '''
-    Used to make interactive plots from data
+    """
+    Used to make interactive plots from vehicle data
 
     Args:
-        
-    '''
+
+    """
+
     def __init__(self, title: str, x_range: tuple, y_range: tuple) -> None:
         super().__init__()
 
@@ -38,17 +39,19 @@ class DataPlot(QFrame):
         self.__plot.hideButtons()
         self.__plot.scene().sigMouseMoved.connect(self.__on_mouse_moved)
 
-        self.__crosshair_x = pg.InfiniteLine(pos=(0, 0), angle=90, pen=pg.mkPen("orange"))
+        self.__crosshair_x = pg.InfiniteLine(
+            pos=(0, 0), angle=90, pen=pg.mkPen("orange")
+        )
         self.__crosshair_x.setZValue(1)
         self.__plot.addItem(
             self.__crosshair_x,
         )
-        
-        self.__crosshair_y = pg.InfiniteLine(pos=(0, 0), angle=0, pen=pg.mkPen("orange"))
-        self.__crosshair_y.setZValue(1)
-        self.__plot.addItem(
-            self.__crosshair_y
+
+        self.__crosshair_y = pg.InfiniteLine(
+            pos=(0, 0), angle=0, pen=pg.mkPen("orange")
         )
+        self.__crosshair_y.setZValue(1)
+        self.__plot.addItem(self.__crosshair_y)
 
         self.__x_value = pg.TextItem(
             text="",
@@ -63,20 +66,19 @@ class DataPlot(QFrame):
         self.__y_value = pg.TextItem(
             text="",
             color="white",
-            anchor=(-0.10, 0.5),
+            anchor=(-0.25, 0.5),
             border=pg.mkPen("orange"),
             fill=pg.mkBrush("black"),
         )
         self.__y_value.setZValue(2)
         self.__plot.addItem(self.__y_value)
-        
+
         self.__gradient = QLinearGradient(0, 1 * y_range[0], 0, 1 * y_range[1])
         self.__gradient.setColorAt(1, pg.mkColor("red"))
         self.__gradient.setColorAt(0.5, pg.mkColor((255, 255, 0, 15)))
         self.__gradient.setColorAt(0.0, pg.mkColor("green"))
         self.__brush = QBrush(self.__gradient)
 
-        # Testing:
         self.__x_data = np.linspace(start=-5, stop=5, num=1000)
         self.__y_data = 50 * np.cos(5 * self.__x_data)
         self.__y_data[400:600] = self.__y_data[400:600] * 2
@@ -102,6 +104,28 @@ class DataPlot(QFrame):
         self.__crosshair_y.setPos(y_value)
         self.__x_value.setPos(x_value, self.__y_range[0])
         self.__y_value.setPos(x_value, y_value)
+
+        if self.__y_value.anchor[0] == -0.25:
+            width = (
+                self.__plot.vb.mapSceneToView(
+                    self.__y_value.mapToScene(self.__y_value.boundingRect().width(), 0)
+                ).x()
+                - x_value
+            )
+
+            if x_value - width * (self.__y_value.anchor[0] - 1) >= self.__x_range[1]:
+                self.__y_value.setAnchor((1.25, 0.5))
+
+        else:
+            width = (
+                self.__plot.vb.mapSceneToView(
+                    self.__y_value.mapToScene(self.__y_value.boundingRect().width(), 0)
+                ).x()
+                - x_value
+            )
+
+            if x_value - width * self.__y_value.anchor[0] <= self.__x_range[0]:
+                self.__y_value.setAnchor((-0.25, 0.5))
 
 
 if __name__ == "__main__":
