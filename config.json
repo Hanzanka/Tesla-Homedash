@@ -1,0 +1,166 @@
+{
+    "tesla data": {
+        "ACChargingPower": {
+            "category": "Charging",
+            "unit": "W",
+            "log": true,
+            "formula": null
+        },
+        "BatteryLevel": {
+            "category": "Charging",
+            "unit": "%",
+            "log": true,
+            "formula": null
+        },
+        "BmsFullchargecomplete": {
+            "category": "Charging",
+            "unit": null,
+            "log": false,
+            "formula": null
+        },
+        "ChargeAmps": {
+            "category": "Charging",
+            "unit": "A",
+            "log": true,
+            "formula": null
+        },
+        "BMSState": {
+            "category": "Charging",
+            "unit": null,
+            "log": true,
+            "formula": null
+        },
+        "ChargeLimitSoc": {
+            "category": "Charging",
+            "unit": "%",
+            "log": false,
+            "formula": null
+        },
+        "ChargeRateMilePerHour": {
+            "category": "Charging",
+            "unit": "km/h",
+            "log": true,
+            "formula": "x * 1.609344"
+        },
+        "ChargerPhases": {
+            "category": "Charging",
+            "unit": null,
+            "log": false,
+            "formula": null
+        },
+        "ChargerVoltage": {
+            "category": "Charging",
+            "unit": "V",
+            "log": true,
+            "formula": null
+        },
+        "DetailedChargeState": {
+            "category": "Charging",
+            "unit": null,
+            "log": true,
+            "formula": null
+        },
+        "DriverSeatOccupied": {
+            "category": "Driving",
+            "unit": null,
+            "log": true,
+            "formula": null
+        },
+        "EnergyRemaining": {
+            "category": "Charging",
+            "unit": "kWh",
+            "log": true,
+            "formula": null
+        },
+        "EstimatedHoursToChargeTermination": {
+            "category": "Charging",
+            "unit": "h",
+            "log": false,
+            "formula": null
+        },
+        "Gear": {
+            "category": "Driving",
+            "unit": null,
+            "log": true,
+            "formula": null
+        },
+        "HvacACEnabled": {
+            "category": "Climate",
+            "unit": null,
+            "log": false,
+            "formula": null
+        },
+        "HvacLeftTemperatureRequest": {
+            "category": "Climate",
+            "unit": "°C",
+            "log": false,
+            "formula": null
+        },
+        "HvacRightTemperatureRequest": {
+            "category": "Climate",
+            "unit": "°C",
+            "log": false,
+            "formula": null
+        },
+        "InsideTemp": {
+            "category": "Climate",
+            "unit": "°C",
+            "log": false,
+            "formula": null
+        },
+        "LifetimeEnergyUsed": {
+            "category": "Charging",
+            "unit": "kWh",
+            "log": true,
+            "formula": null
+        },
+        "Location": {
+            "category": "Location",
+            "unit": null,
+            "log": true,
+            "formula": null
+        },
+        "Locked": {
+            "category": "Vehicle state",
+            "unit": null,
+            "log": true,
+            "formula": null
+        },
+        "Odometer": {
+            "category": "Vehicle state",
+            "unit": "km",
+            "log": true,
+            "formula": "x * 1.609344"
+        },
+        "OutsideTemp": {
+            "category": "Climate",
+            "unit": "°C",
+            "log": true,
+            "formula": null
+        },
+        "RatedRange": {
+            "category": "Charging",
+            "unit": "km",
+            "log": true,
+            "formula":"x * 1.609344"
+        },
+        "TimeToFullCharge": {
+            "category": "Charging",
+            "unit": "h",
+            "log": false,
+            "formula": null
+        },
+        "VehicleSpeed": {
+            "category": "Driving",
+            "unit": "km/h",
+            "log": true,
+            "formula":"x * 1.609344"
+        },
+        "VehicleOnline": {
+            "category": "Vehicle state",
+            "unit": null,
+            "log": false,
+            "formula": null
+        }
+    }
+}
