@@ -105,26 +105,19 @@ class DataPlot(QFrame):
         self.__x_value.setPos(x_value, self.__y_range[0])
         self.__y_value.setPos(x_value, y_value)
 
-        if self.__y_value.anchor[0] == -0.25:
-            width = (
-                self.__plot.vb.mapSceneToView(
-                    self.__y_value.mapToScene(self.__y_value.boundingRect().width(), 0)
-                ).x()
-                - x_value
-            )
+        y_value_width = (
+            self.__plot.vb.mapSceneToView(
+                self.__y_value.mapToScene(self.__y_value.boundingRect().width(), 0)
+            ).x()
+            - x_value
+        )
 
-            if x_value - width * (self.__y_value.anchor[0] - 1) >= self.__x_range[1]:
+        if self.__y_value.anchor[0] == -0.25:
+            if x_value - y_value_width * -1.25 >= self.__x_range[1]:
                 self.__y_value.setAnchor((1.25, 0.5))
 
         else:
-            width = (
-                self.__plot.vb.mapSceneToView(
-                    self.__y_value.mapToScene(self.__y_value.boundingRect().width(), 0)
-                ).x()
-                - x_value
-            )
-
-            if x_value - width * self.__y_value.anchor[0] <= self.__x_range[0]:
+            if x_value - y_value_width * 1.25 <= self.__x_range[0]:
                 self.__y_value.setAnchor((-0.25, 0.5))
 
 
