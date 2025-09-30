@@ -161,4 +161,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 .tmp.driveupload/
-.tmp.drivedownload/
+.tmp.drivedownload/¨
+server_test.py
+response_exmpl.txt
+start_tesla_services.py
